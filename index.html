@@ -8,34 +8,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontPrompt -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
         body { font-family: 'Prompt', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center">
         <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">⏱️</div>
-        <h1 class="text-2xl font-bold text-gray-800 mb-2">เชื่อมต่อฐานข้อมูลสำเร็จ!</h1>
-        <p class="text-gray-600 mb-6">ระบบลงเวลาทำงานของคุณถูกเชื่อมต่อเข้ากับ Firebase Cloud เรียบร้อยแล้ว ข้อมูลจะซิงค์ตรงกันทุกเครื่องแบบเรียลไทม์</p>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">ระบบลงเวลาทำงานพร้อมใช้งาน</h1>
+        <p class="text-gray-600 mb-6">ฐานข้อมูล Cloud Firestore เชื่อมต่อสำเร็จ พร้อมสำหรับใช้งานจริงทุกอุปกรณ์</p>
         
-        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-left text-sm text-blue-800 mb-6">
-            <p class="font-semibold mb-1">📌 สถานะระบบ:</p>
+        <div id="status-box" class="bg-green-50 border border-green-200 rounded-xl p-4 text-left text-sm text-green-800 mb-6">
+            <p class="font-semibold mb-1">🟢 สถานะระบบออนไลน์:</p>
             <ul class="list-disc list-inside space-y-1">
                 <li>Project ID: <span class="font-mono">time-recorder-ae284</span></li>
-                <li>Database: Cloud Firestore (Online)</li>
-                <li>พร้อมใช้งานบนทุกอุปกรณ์</li>
+                <li>Cloud Firestore: เชื่อมต่อสำเร็จ</li>
             </ul>
         </div>
 
         <button onclick="location.reload()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition shadow-md">
-            รีเฟรช / เข้าสู่ระบบหลัก
+            รีเฟรชหน้าจอ
         </button>
     </div>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDK & App Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/com.firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addTimestamp } from "https://www.gstatic.com/com.firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/com.firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyBnGrddLA9n4xnXJ9s4kG4Ph1LId9z-5f4",
